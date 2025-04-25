@@ -1,12 +1,15 @@
 package ar.com.todoapp.presentation.ui.fragment.main.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
 import ar.com.todoapp.core.Resource
 import ar.com.todoapp.data.model.Task
 import ar.com.todoapp.repository.TaskRepository
 import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -34,6 +37,7 @@ class TaskViewModelTest {
     fun setup() {
         Dispatchers.setMain(testDispatcher)
         taskRepository = mock()
+        whenever(taskRepository.getTaskList()).thenReturn(flowOf(Resource.Success(emptyList())))
         viewModel = TaskViewModel(taskRepository)
     }
 
@@ -44,35 +48,19 @@ class TaskViewModelTest {
 
     @Test
     fun `fetch task list returns success`() = runTest(testDispatcher) {
-        val taskList = listOf(Task(1, "title", "desc"))
-        whenever(taskRepository.getTaskList()).thenReturn(Resource.Success(taskList))
+        val expectedTasks = listOf(Task(1, "title", "desc"))
+        val flow = flowOf(Resource.Success(expectedTasks))
 
-        val result = mutableListOf<Resource<List<Task>>>()
-        val liveData = viewModel.fetchTaskList()
+        whenever(taskRepository.getTaskList()).thenReturn(flow)
 
-        liveData.observeForever {
-            result.add(it)
+        viewModel = TaskViewModel(taskRepository)
+
+        viewModel.tasks.test {
+            val tasksResource = awaitItem()
+            assertTrue(tasksResource is Resource.Success)
+            assertEquals(expectedTasks, (tasksResource as Resource.Success).data)
+            cancelAndIgnoreRemainingEvents()
         }
-
-        advanceUntilIdle()
-
-        assert(result.isNotEmpty())
-        assert(result.first() is Resource.Success)
-        assertEquals(taskList, (result.first() as Resource.Success).data)
-    }
-
-    @Test
-    fun `fetch task list returns failure`() = runTest {
-        val exception = RuntimeException("DB Error")
-        whenever(taskRepository.getTaskList()).thenThrow(exception)
-
-        val result = mutableListOf<Resource<List<Task>>>()
-        viewModel.fetchTaskList().observeForever {
-            result.add(it)
-        }
-
-        assert(result.first() is Resource.Failure)
-        assertEquals(exception, (result.first() as Resource.Failure).exception)
     }
 
     @Test

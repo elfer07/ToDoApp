@@ -1,10 +1,10 @@
 package ar.com.todoapp.data.local
 
-import ar.com.todoapp.core.Resource
+import app.cash.turbine.test
 import ar.com.todoapp.data.model.Task
 import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -25,12 +25,15 @@ class LocalTaskDataSourceTest {
     @Test
     fun `get task list returns success`() = runTest {
         val tasks = listOf(Task(1, "Test", "Description"))
-        whenever(taskDao.getTaskList()).thenReturn(tasks)
+        whenever(taskDao.getTaskList()).thenReturn(flowOf(tasks))
 
-        val result = localDataSource.getTaskList()
+        val resultFlow = localDataSource.getTaskList()
 
-        assertTrue(result is Resource.Success)
-        assertEquals(tasks, (result as Resource.Success).data)
+        resultFlow.test {
+            val result = awaitItem()
+            assertEquals(tasks, result)
+            awaitComplete()
+        }
     }
 
     @Test

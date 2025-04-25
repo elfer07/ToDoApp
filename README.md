@@ -1,12 +1,13 @@
-# MovieApp
+# Todo App
 Application with a clean architecture this built with
  - MVVM
- - Extension Functions
  - Room Database
- - Navigation Components
- - ViewBinding
+ - Migration Jetpack Compose
+ - Flow
  - Coroutines 
  - Unit Tests
+
+for legacy project you can see branch 'legacy'
 
  # Architecture
  
@@ -18,6 +19,13 @@ Application with a clean architecture this built with
  
  # Screen
 
-![Screenshot](screen.png)
+![Screenshot](new_screen.png)
 
+# Support
 
+Like what you see?
+
+- ⭐ **Star This repo!** — it helps more people discover it!
+- 👍🏽 **Follow me** [![GitHub followers](https://img.shields.io/github/followers/tuusuario?label=Follow&style=social)](https://github.com/elfer07)
+
+Thanks for your support! 🫶🏽

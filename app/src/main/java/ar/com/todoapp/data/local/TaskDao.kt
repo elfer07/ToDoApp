@@ -2,6 +2,7 @@ package ar.com.todoapp.data.local
 
 import androidx.room.*
 import ar.com.todoapp.data.model.Task
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Created by Fernando Moreno on 8/4/2021.
@@ -10,7 +11,7 @@ import ar.com.todoapp.data.model.Task
 interface TaskDao {
 
     @Query("SELECT * FROM Tasks")
-    suspend fun getTaskList(): List<Task>
+    fun getTaskList(): Flow<List<Task>>
 
     @Insert
     suspend fun saveTask(task: Task)

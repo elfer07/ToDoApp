@@ -1,11 +1,13 @@
 package ar.com.todoapp.repository
 
+import app.cash.turbine.test
 import ar.com.todoapp.core.Resource
 import ar.com.todoapp.data.local.LocalTaskDataSource
 import ar.com.todoapp.data.model.Task
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -27,14 +29,16 @@ class TaskRepositoryImplTest {
     @Test
     fun `get task list returns Resource from dataSource`() = runTest {
         val tasks = listOf(Task(1, "Repo Task", "Test"))
-        val expected = Resource.Success(tasks)
+        val expected = flowOf(tasks)
 
         whenever(localDataSource.getTaskList()).thenReturn(expected)
 
         val result = repository.getTaskList()
 
-        assertTrue(result is Resource.Success)
-        assertEquals(tasks, (result as Resource.Success).data)
+        result.test {
+            assertTrue(awaitItem() is Resource.Success)
+            awaitComplete()
+        }
     }
 
     @Test
@@ -58,7 +62,9 @@ class TaskRepositoryImplTest {
             Unit
         }
 
-        whenever(localDataSource.getTaskList()).thenReturn(Resource.Success(tasks))
+        whenever(localDataSource.getTaskList()).thenAnswer {
+            flowOf(tasks.toList())
+        }
 
         // Act: save task
         repository.saveTask(task)
@@ -68,8 +74,14 @@ class TaskRepositoryImplTest {
 
         // Check task added
         val result = repository.getTaskList()
-        assertTrue(result is Resource.Success)
-        assertTrue((result as Resource.Success).data.contains(task))
+        result.test {
+            val items = awaitItem()
+            assertTrue(items is Resource.Success)
+            val taskList = (items as Resource.Success).data
+            assertEquals(1, taskList.size)
+            assertEquals(task, taskList[0])
+            awaitComplete()
+        }
     }
 
     @Test

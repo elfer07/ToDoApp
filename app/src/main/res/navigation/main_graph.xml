@@ -9,27 +9,5 @@
         android:id="@+id/mainFragment"
         android:name="ar.com.todoapp.presentation.ui.fragment.main.views.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_mainFragment_to_dialogEditFragment"
-            app:destination="@id/dialogEditFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/dialogEditFragment"
-        android:name="ar.com.todoapp.presentation.ui.fragment.dialog.DialogEditFragment"
-        android:label="fragment_dialog_edit"
-        tools:layout="@layout/fragment_dialog_edit" >
-        <argument
-            android:name="id"
-            app:argType="integer" />
-        <argument
-            android:name="title"
-            app:argType="string" />
-        <argument
-            android:name="description"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_dialogEditFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_main" />
 </navigation>
