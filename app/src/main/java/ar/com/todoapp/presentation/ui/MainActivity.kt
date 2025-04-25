@@ -1,4 +1,4 @@
-package ar.com.todoapp.ui
+package ar.com.todoapp.presentation.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -6,6 +6,7 @@ Application with a clean architecture this built with
  - Navigation Components
  - ViewBinding
  - Coroutines 
+ - Unit Tests
 
  # Architecture
  
