@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="ar.com.todoapp.ui.fragment.main.MainFragment"
+        android:name="ar.com.todoapp.presentation.ui.fragment.main.views.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/dialogEditFragment"
-        android:name="ar.com.todoapp.ui.fragment.dialog.DialogEditFragment"
+        android:name="ar.com.todoapp.presentation.ui.fragment.dialog.DialogEditFragment"
         android:label="fragment_dialog_edit"
         tools:layout="@layout/fragment_dialog_edit" >
         <argument

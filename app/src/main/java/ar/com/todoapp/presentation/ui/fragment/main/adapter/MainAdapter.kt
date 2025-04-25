@@ -1,4 +1,4 @@
-package ar.com.todoapp.ui.fragment.main.adapter
+package ar.com.todoapp.presentation.ui.fragment.main.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -14,8 +14,8 @@ import ar.com.todoapp.databinding.TaskItemBinding
 class MainAdapter(
     private val context: Context,
     private val taskList: List<Task>,
-    private val itemClickListener: OnEditClickListener,
-    private val itemClickListenerr: OnDeleteClickListener
+    private val itemClickEditListener: OnEditClickListener,
+    private val itemClickDeleteListener: OnDeleteClickListener
 ) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     interface OnEditClickListener {
@@ -33,13 +33,13 @@ class MainAdapter(
 
         itemBinding.ivDeleteTask.setOnClickListener {
             val position = holder.adapterPosition
-            itemClickListenerr.onDeleteTaskClick(taskList[position], position)
-            notifyItemRangeChanged(position, taskList.size)
+            itemClickDeleteListener.onDeleteTaskClick(taskList[position], position)
+            notifyItemRemoved(position)
         }
 
         itemBinding.ivEditTask.setOnClickListener {
             val position = holder.adapterPosition
-            itemClickListener.onEditTaskClick(taskList[position], position)
+            itemClickEditListener.onEditTaskClick(taskList[position], position)
         }
         return holder
     }

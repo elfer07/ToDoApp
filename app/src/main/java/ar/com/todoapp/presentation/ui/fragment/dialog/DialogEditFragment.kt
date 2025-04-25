@@ -1,4 +1,4 @@
-package ar.com.todoapp.ui.fragment.dialog
+package ar.com.todoapp.presentation.ui.fragment.dialog
 
 import android.os.Bundle
 import android.view.View
@@ -12,8 +12,8 @@ import ar.com.todoapp.data.local.AppDatabase
 import ar.com.todoapp.data.local.LocalTaskDataSource
 import ar.com.todoapp.data.model.Task
 import ar.com.todoapp.databinding.DialogEditTaskBinding
-import ar.com.todoapp.presentation.TaskViewModel
-import ar.com.todoapp.presentation.TaskViewModelFactory
+import ar.com.todoapp.presentation.ui.fragment.main.viewmodels.TaskViewModel
+import ar.com.todoapp.presentation.ui.fragment.main.viewmodels.TaskViewModelFactory
 import ar.com.todoapp.repository.TaskRepositoryImpl
 
 class DialogEditFragment : Fragment(R.layout.fragment_dialog_edit) {
