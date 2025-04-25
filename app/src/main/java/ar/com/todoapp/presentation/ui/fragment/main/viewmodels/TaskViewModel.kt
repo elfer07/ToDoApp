@@ -1,4 +1,4 @@
-package ar.com.todoapp.presentation
+package ar.com.todoapp.presentation.ui.fragment.main.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
  */
 class TaskViewModel(private val repo: TaskRepository): ViewModel() {
 
-    fun fetchTaskList() = liveData(Dispatchers.IO){
+    fun fetchTaskList() = liveData(Dispatchers.Main){
         try {
             emit(repo.getTaskList())
         }catch (e: Exception){

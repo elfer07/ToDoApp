@@ -10,12 +10,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "Tasks")
 data class Task(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = -1,
+    var id: Int = -1,
     @ColumnInfo(name = "title")
-    val title: String = "NO_TITLE",
+    var title: String = "NO_TITLE",
     @ColumnInfo(name = "description")
-    val description: String = "NO_DESCRIPTION"
-){
-
-
-}
+    var description: String = "NO_DESCRIPTION"
+)

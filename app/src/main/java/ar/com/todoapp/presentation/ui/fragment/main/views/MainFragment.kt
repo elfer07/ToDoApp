@@ -1,4 +1,4 @@
-package ar.com.todoapp.ui.fragment.main
+package ar.com.todoapp.presentation.ui.fragment.main.views
 
 import android.app.Dialog
 import android.os.Bundle
@@ -18,10 +18,10 @@ import ar.com.todoapp.data.local.AppDatabase
 import ar.com.todoapp.data.local.LocalTaskDataSource
 import ar.com.todoapp.data.model.Task
 import ar.com.todoapp.databinding.FragmentMainBinding
-import ar.com.todoapp.presentation.TaskViewModel
-import ar.com.todoapp.presentation.TaskViewModelFactory
 import ar.com.todoapp.repository.TaskRepositoryImpl
-import ar.com.todoapp.ui.fragment.main.adapter.MainAdapter
+import ar.com.todoapp.presentation.ui.fragment.main.adapter.MainAdapter
+import ar.com.todoapp.presentation.ui.fragment.main.viewmodels.TaskViewModel
+import ar.com.todoapp.presentation.ui.fragment.main.viewmodels.TaskViewModelFactory
 
 class MainFragment : Fragment(R.layout.fragment_main), MainAdapter.OnEditClickListener, MainAdapter.OnDeleteClickListener {
 
